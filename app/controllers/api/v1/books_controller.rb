@@ -38,6 +38,8 @@ class Api::V1::BooksController < ApplicationController
       render json: @book.errors.full_messages, status: :unprocessable_entity
     end
   end
+
+  
 end
 
 private
