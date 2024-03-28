@@ -7,14 +7,14 @@ default: &default
 development:
   <<: *default
   database: books_server_side_development
-  username: <%= ENV["POSTGRES_USER"] %>
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  username: postgres
+  password: tshepi14c
 
 test:
   <<: *default
   database: books_server_side_test
-  username: <%= ENV["POSTGRES_USER"] %>
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  username: postgres
+  password: tshepi14c
 
 production:
   <<: *default
