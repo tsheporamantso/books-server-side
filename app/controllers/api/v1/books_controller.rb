@@ -1,4 +1,5 @@
 class Api::V1::BooksController < ApplicationController
+  before_action :set_books, only: [:show, :edit, :update, :destroy]
   
   def index
     @books = Book.all
@@ -6,7 +7,6 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def show
-    @book = Book.find(params[:id])
     render json: @book
   end
 
@@ -26,12 +26,10 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
+    render json: @book
   end
 
   def update
-    @book = Book.find(params[:id])
-
     if @book.update(book_params)
       render json: @book, status: :ok
     else
@@ -39,11 +37,33 @@ class Api::V1::BooksController < ApplicationController
     end
   end
 
-  
+  def destroy
+    if @book.destroy
+      render json: {
+        status: {
+          code: 200,
+          message: 'Book deleted successfully'
+        }
+      }, status: :ok
+    else
+      render json: {
+        status: {
+          code: 400,
+          message: 'Book could not be deleted'
+        }
+      }, status: :unproccessable_entity
+    end
+  end
+
+
 end
 
 private
 
 def book_params
   params.require(:book).permit(:title, :author, :photo)
+end
+
+def set_books
+  @book = Book.find(params[:id])
 end
